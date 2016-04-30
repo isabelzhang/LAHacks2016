@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Leap;
 
+
 namespace Leap.Unity {
   /**
    * LeapHandController uses a Factory to create and updata HandRepresentations based on Frame's received from a Provider  */
@@ -12,6 +13,7 @@ namespace Leap.Unity {
 
     public LeapProvider Provider { get; set; }
     public HandFactory Factory { get; set; }
+        Leap.Controller controller;
 
     public Dictionary<int, HandRepresentation> graphicsReps = new Dictionary<int, HandRepresentation>();
     public Dictionary<int, HandRepresentation> physicsReps = new Dictionary<int, HandRepresentation>();
@@ -65,7 +67,7 @@ namespace Leap.Unity {
     protected virtual void Start() {
       Provider = GetComponent<LeapProvider>();
       Factory = GetComponent<HandFactory>();
-    }
+        }
 
     /** Updates the graphics HandRepresentations. */
     protected virtual void Update() {
@@ -80,7 +82,6 @@ namespace Leap.Unity {
     /** Updates the physics HandRepresentations. */
     protected virtual void FixedUpdate() {
       Frame fixedFrame = Provider.CurrentFixedFrame;
-
       if (fixedFrame.Id != prev_physics_id_ && physicsEnabled) {
         UpdateHandRepresentations(physicsReps, ModelType.Physics, fixedFrame);
         prev_physics_id_ = fixedFrame.Id;
@@ -134,5 +135,6 @@ namespace Leap.Unity {
         toBeDeleted.Finish();
       }
     }
+
   }
 }
